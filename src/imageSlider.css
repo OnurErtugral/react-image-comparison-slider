@@ -13,7 +13,7 @@
 }
 
 .slider__stick:hover {
-  cursor: pointer;
+  cursor: ew-resize;
 }
 
 .slider__container {

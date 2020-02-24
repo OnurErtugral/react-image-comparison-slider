@@ -4,7 +4,8 @@
     "browser": true,
     "node": true
   },
-  "extends": ["eslint:recommended"],
+  "parser": "@typescript-eslint/parser",
+  "extends": ["react-app", "plugin:@typescript-eslint/recommended"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -20,6 +21,7 @@
   "rules": {
     "no-unused-expressions": "off",
     "no-unused-vars": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "interface-name-prefix": "off"
   }
 }

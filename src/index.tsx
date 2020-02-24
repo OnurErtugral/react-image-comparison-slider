@@ -2,19 +2,28 @@ import * as React from "react";
 
 import "./imageSlider.css";
 
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
 interface IProps {
   image1: string;
   image2: string;
-  stickColor?: string;
-  stickWidth?: number;
+  alt1?: string;
+  alt2?: string;
+  sliderColor?: string;
+  sliderWidth?: number;
+  sliderInitialPosition?: number;
+  onSlide?: () => void;
 }
 
 export default function ImageSlider({
   image1,
   image2,
-  stickColor = "red",
-  stickWidth = 5,
-}: IProps) {
+  alt1 = "alt1",
+  alt2 = "alt2",
+  sliderColor = "red",
+  sliderWidth = 5,
+  sliderInitialPosition = 0.5,
+  onSlide,
+}: IProps): React.ReactNode {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -30,9 +39,9 @@ export default function ImageSlider({
         width,
         height,
       });
-      setFromLeft(width / 2);
+      setFromLeft(width * sliderInitialPosition);
     }
-  }, []);
+  }, [sliderInitialPosition]);
 
   React.useEffect(() => {
     function handleMouseUp(e: MouseEvent | TouchEvent): void {
@@ -42,6 +51,7 @@ export default function ImageSlider({
     function handleMouseMove(e: MouseEvent): void {
       if (containerRef && containerRef.current && isMouseDown) {
         const { left, width } = containerRef.current.getBoundingClientRect();
+        onSlide && onSlide();
 
         if (e.pageX - left < 0) {
           setFromLeft(0);
@@ -72,13 +82,13 @@ export default function ImageSlider({
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("touchmove", handleTouchMove);
 
-    return () => {
+    return (): void => {
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("touchend", handleMouseUp);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [isMouseDown]);
+  }, [isMouseDown, onSlide]);
 
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -92,7 +102,7 @@ export default function ImageSlider({
       className="slider__wrapper"
       ref={containerRef}
       style={{
-        cursor: isMouseDown ? "pointer" : "default",
+        cursor: isMouseDown ? "ew-resize" : "default",
       }}
     >
       {fromLeft === null ? (
@@ -101,7 +111,7 @@ export default function ImageSlider({
         <>
           <div className="slider__container">
             <img
-              alt="img1"
+              alt={alt1}
               src={image1}
               width={containerSize.width}
               height={containerSize.height}
@@ -112,7 +122,7 @@ export default function ImageSlider({
             style={{ width: fromLeft }}
           >
             <img
-              alt="img2"
+              alt={alt2}
               src={image2}
               width={containerSize.width}
               height={containerSize.height}
@@ -123,8 +133,8 @@ export default function ImageSlider({
             className="slider__stick"
             style={{
               left: fromLeft,
-              backgroundColor: stickColor,
-              width: stickWidth,
+              backgroundColor: sliderColor,
+              width: sliderWidth,
             }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleMouseDown}

@@ -1,16 +1,18 @@
 {
   "name": "react-image-comparison-slider",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
     "build": "tsc && webpack --mode production",
-    "lint": "eslint .",
+    "lint": "eslint ./src/*.tsx",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
   "author": "Onur Ertugral",
+  "homepage": "https://github.com/OnurErtugral/react-image-comparison-slider",
+  "bugs": "https://github.com/OnurErtugral/react-image-comparison-slider/issues",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -19,10 +21,18 @@
     "@babel/preset-typescript": "^7.8.3",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.3",
@@ -44,5 +54,10 @@
       "pre-commit": "npm run lint && npm run format"
     }
   },
-  "keywords": []
+  "keywords": [
+    "slider",
+    "react",
+    "image comparison",
+    "photo comparison"
+  ]
 }

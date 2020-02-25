@@ -23,7 +23,7 @@ export default function ImageSlider({
   sliderWidth = 5,
   sliderInitialPosition = 0.5,
   onSlide,
-}: IProps): React.ReactNode {
+}: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
   const containerRef = React.useRef<HTMLDivElement>(null);

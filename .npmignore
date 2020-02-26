@@ -5,3 +5,4 @@ src
 .gitignore
 .prettierrc
 tsconfig.json
+assets

@@ -1,7 +1,7 @@
 # React Image Comparison Slider
 
 <p align="center">
-  <a href="https://codesandbox.io/embed/elegant-jepsen-nfhyi"><img src="assets/ImageSlider.gif" /></a>
+  <a href="https://raw.githubusercontent.com/OnurErtugral/react-image-comparison-slider/master/assets/ImageSlider.gif"><img src="assets/ImageSlider.gif" /></a>
 </p>
 <p align="middle">
   <i>Click above to play with the live demo.</i>

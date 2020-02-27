@@ -44,6 +44,8 @@ import ImageSlider from "react-image-comparison-slider";
 | alt1                  |  string  | `alt1`  | First image's alt text                                            |
 | alt2                  |  string  | `alt2`  | Second image's alt text                                           |
 | sliderColor           |  number  |  `red`  | Slider's color. Should be valid CSS color expression.             |
-| sliderWidth           |  number  |    5    | Slider's width in pixel.                                          |
+| sliderWidth           |  number  |    4    | Slider's width in pixel.                                          |
+| handleBackgroundColor |  string  | "white" | Background color of the slider's handle.                          |
+| handleColor           |  string  |  "red"  | Background color of the triangles on the slider's handle.         |
 | sliderInitialPosition |  number  |   0.5   | Slider's initial position between 0 and 1.                        |
 | onSlide               | function |    -    | A callback function which is invoked on slider's position change. |

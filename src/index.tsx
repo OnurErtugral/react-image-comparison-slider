@@ -1,6 +1,9 @@
 import * as React from "react";
 
 import "./imageSlider.css";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import SliderHandle from "../assets/SliderHandle.js";
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 interface IProps {
@@ -12,6 +15,8 @@ interface IProps {
   sliderWidth?: number;
   sliderInitialPosition?: number;
   onSlide?: () => void;
+  handleBackgroundColor?: string;
+  handleColor?: string;
 }
 
 export default function ImageSlider({
@@ -20,9 +25,11 @@ export default function ImageSlider({
   alt1 = "alt1",
   alt2 = "alt2",
   sliderColor = "red",
-  sliderWidth = 5,
+  sliderWidth = 4,
   sliderInitialPosition = 0.5,
   onSlide,
+  handleBackgroundColor = "white",
+  handleColor = "red",
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -138,7 +145,14 @@ export default function ImageSlider({
             }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleMouseDown}
-          />
+          >
+            <div className="slider__handle">
+              <SliderHandle
+                backgroundColor={handleBackgroundColor}
+                color={handleColor}
+              />
+            </div>
+          </div>
         </>
       )}
     </div>

@@ -136,3 +136,9 @@ it("trigers onSlide callback, upon mouseMove", () => {
 
   expect(onSlide).toBeCalled();
 });
+
+it("renders SliderHandle", () => {
+  const wrapper = mount(<ImageSlider />);
+
+  expect(wrapper.find("SliderHandle")).toHaveLength(1);
+});

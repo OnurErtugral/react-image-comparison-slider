@@ -16,6 +16,13 @@
   cursor: ew-resize;
 }
 
+.slider__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
 .slider__container {
   position: absolute;
   height: 100%;

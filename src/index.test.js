@@ -142,3 +142,34 @@ it("renders SliderHandle", () => {
 
   expect(wrapper.find("SliderHandle")).toHaveLength(1);
 });
+
+it("renders custom SliderHandle", () => {
+  const customHandle = (
+    <div
+      style={{
+        height: 20,
+        width: 20,
+        backgroundColor: "hotpink",
+      }}
+    />
+  );
+  const wrapper = mount(<ImageSlider customHandle={customHandle} />);
+
+  expect(
+    wrapper
+      .find(".slider__handle")
+      .childAt(0)
+      .prop("style"),
+  ).toEqual({
+    height: 20,
+    width: 20,
+    backgroundColor: "hotpink",
+  });
+});
+
+it("does not render SliderHandle, if showHandle is false", () => {
+  const showHandle = false;
+  const wrapper = mount(<ImageSlider showHandle={showHandle} />);
+
+  expect(wrapper.find(".slider__handle").children()).toHaveLength(0);
+});

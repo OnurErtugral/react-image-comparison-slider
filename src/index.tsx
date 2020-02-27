@@ -17,6 +17,8 @@ interface IProps {
   onSlide?: () => void;
   handleBackgroundColor?: string;
   handleColor?: string;
+  showHandle?: boolean;
+  customHandle?: JSX.Element | null;
 }
 
 export default function ImageSlider({
@@ -30,6 +32,8 @@ export default function ImageSlider({
   onSlide,
   handleBackgroundColor = "white",
   handleColor = "red",
+  showHandle = true,
+  customHandle = null,
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -147,10 +151,16 @@ export default function ImageSlider({
             onTouchStart={handleMouseDown}
           >
             <div className="slider__handle">
-              <SliderHandle
-                backgroundColor={handleBackgroundColor}
-                color={handleColor}
-              />
+              {showHandle ? (
+                customHandle ? (
+                  customHandle
+                ) : (
+                  <SliderHandle
+                    backgroundColor={handleBackgroundColor}
+                    color={handleColor}
+                  />
+                )
+              ) : null}
             </div>
           </div>
         </>

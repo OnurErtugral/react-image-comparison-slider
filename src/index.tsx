@@ -69,9 +69,9 @@ export default function ImageSlider({
         onSlide && onSlide();
 
         if (e.pageX - left < 0) {
-          setFromLeft(0);
+          setFromLeft(0 - sliderWidth / 2);
         } else if (e.pageX > left + width) {
-          setFromLeft(width);
+          setFromLeft(width - sliderWidth / 2);
         } else {
           setFromLeft(e.pageX - left);
         }
@@ -83,9 +83,9 @@ export default function ImageSlider({
         const { left, width } = containerRef.current.getBoundingClientRect();
 
         if (e.touches[0].pageX - left < 0) {
-          setFromLeft(0);
+          setFromLeft(0 - sliderWidth / 2);
         } else if (e.touches[0].pageX > left + width) {
-          setFromLeft(width);
+          setFromLeft(width - sliderWidth / 2);
         } else {
           setFromLeft(e.touches[0].pageX - left);
         }
@@ -103,7 +103,7 @@ export default function ImageSlider({
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [isMouseDown, onSlide]);
+  }, [isMouseDown, onSlide, sliderWidth]);
 
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -137,7 +137,7 @@ export default function ImageSlider({
           </div>
           <div
             className="slider__container img-comp-overlay"
-            style={{ width: fromLeft }}
+            style={{ width: fromLeft <= 0 ? 0 : fromLeft }}
           >
             <img
               alt={alt2}

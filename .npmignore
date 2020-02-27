@@ -6,3 +6,6 @@ src
 .prettierrc
 tsconfig.json
 assets
+jest.config.js
+enzyme.config.js
+webpack.config.js

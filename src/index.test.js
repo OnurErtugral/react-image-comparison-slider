@@ -173,3 +173,25 @@ it("does not render SliderHandle, if showHandle is false", () => {
 
   expect(wrapper.find(".slider__handle").children()).toHaveLength(0);
 });
+
+it("renders labels", () => {
+  const leftLabel = "dummy text left";
+  const rightLabel = "dummy text right";
+  const wrapper = mount(
+    <ImageSlider leftLabelText={leftLabel} rightLabelText={rightLabel} />,
+  );
+
+  expect(
+    wrapper
+      .find(".slider__container")
+      .at(0)
+      .text(),
+  ).toContain(rightLabel);
+
+  expect(
+    wrapper
+      .find(".slider__container")
+      .at(1)
+      .text(),
+  ).toContain(leftLabel);
+});

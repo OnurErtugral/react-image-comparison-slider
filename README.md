@@ -4,7 +4,7 @@
   <a href="https://codesandbox.io/embed/elegant-jepsen-nfhyi"><img src="https://raw.githubusercontent.com/OnurErtugral/react-image-comparison-slider/master/assets/ImageSlider.gif" /></a>
 </p>
 <p align="middle">
-  <i>Click above to play with the live demo.</i>
+  <i>Click above to play with <b>the live demo</b>.</i>
 </p>
 
 ## Installation
@@ -50,4 +50,6 @@ import ImageSlider from "react-image-comparison-slider";
 | handleColor           |   string    |  "red"  | Background color of the triangles on the slider's handle.         |
 | customHandle          | DOM Element |  null   | Renders the passed DOM element as a slider handle.                |
 | sliderInitialPosition |   number    |   0.5   | Slider's initial position between 0 and 1.                        |
+| leftLabelText         |   string    |  null   | A label for the first image.                                      |
+| rightLabelText        |   string    |  null   | A label for the second image.                                     |
 | onSlide               |  function   |    -    | A callback function which is invoked on slider's position change. |

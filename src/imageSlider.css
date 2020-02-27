@@ -7,7 +7,7 @@
 
 .slider__stick {
   position: absolute;
-  width: 4px;
+  width: 3px;
   height: 100%;
   background-color: red;
 }
@@ -28,4 +28,24 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+
+.label__text {
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  padding: 6px 12px;
+  white-space: nowrap;
+  border-radius: 4px;
+  color: rgb(240, 240, 240);
+  box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.59);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.label__left {
+  left: 8px;
+}
+
+.label__right {
+  right: 8px;
 }

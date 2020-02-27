@@ -19,6 +19,8 @@ interface IProps {
   handleColor?: string;
   showHandle?: boolean;
   customHandle?: JSX.Element | null;
+  leftLabelText?: string | null;
+  rightLabelText?: string | null;
 }
 
 export default function ImageSlider({
@@ -27,13 +29,15 @@ export default function ImageSlider({
   alt1 = "alt1",
   alt2 = "alt2",
   sliderColor = "red",
-  sliderWidth = 4,
+  sliderWidth = 3,
   sliderInitialPosition = 0.5,
   onSlide,
   handleBackgroundColor = "white",
   handleColor = "red",
   showHandle = true,
   customHandle = null,
+  leftLabelText = null,
+  rightLabelText = null,
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -127,6 +131,9 @@ export default function ImageSlider({
               width={containerSize.width}
               height={containerSize.height}
             />
+            {rightLabelText && (
+              <div className="label__text label__right">{rightLabelText}</div>
+            )}
           </div>
           <div
             className="slider__container img-comp-overlay"
@@ -138,6 +145,9 @@ export default function ImageSlider({
               width={containerSize.width}
               height={containerSize.height}
             />
+            {leftLabelText && (
+              <div className="label__text label__left">{leftLabelText}</div>
+            )}
           </div>
 
           <div

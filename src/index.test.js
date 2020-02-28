@@ -195,3 +195,55 @@ it("renders labels", () => {
       .text(),
   ).toContain(leftLabel);
 });
+
+it("invokes onLoad callbacks", () => {
+  const onLoadFirstImage = jest.fn();
+  const onLoadSecondImage = jest.fn();
+
+  const wrapper = mount(
+    <ImageSlider
+      onLoadFirstImage={onLoadFirstImage}
+      onLoadSecondImage={onLoadSecondImage}
+    />,
+  );
+
+  wrapper
+    .find(".slider__container")
+    .at(0)
+    .find("img")
+    .simulate("load");
+  expect(onLoadFirstImage).toBeCalledTimes(1);
+
+  wrapper
+    .find(".slider__container")
+    .at(1)
+    .find("img")
+    .simulate("load");
+  expect(onLoadSecondImage).toBeCalledTimes(1);
+});
+
+it("invokes onError callbacks", () => {
+  const onErrorFirstImage = jest.fn();
+  const onErrorSecondImage = jest.fn();
+
+  const wrapper = mount(
+    <ImageSlider
+      onErrorFirstImage={onErrorFirstImage}
+      onErrorSecondImage={onErrorSecondImage}
+    />,
+  );
+
+  wrapper
+    .find(".slider__container")
+    .at(0)
+    .find("img")
+    .simulate("error");
+  expect(onErrorFirstImage).toBeCalledTimes(1);
+
+  wrapper
+    .find(".slider__container")
+    .at(1)
+    .find("img")
+    .simulate("error");
+  expect(onErrorSecondImage).toBeCalledTimes(1);
+});

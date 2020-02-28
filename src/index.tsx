@@ -21,6 +21,10 @@ interface IProps {
   customHandle?: JSX.Element | null;
   leftLabelText?: string | null;
   rightLabelText?: string | null;
+  onLoadFirstImage?: () => void;
+  onLoadSecondImage?: () => void;
+  onErrorFirstImage?: () => void;
+  onErrorSecondImage?: () => void;
 }
 
 export default function ImageSlider({
@@ -38,6 +42,10 @@ export default function ImageSlider({
   customHandle = null,
   leftLabelText = null,
   rightLabelText = null,
+  onLoadFirstImage,
+  onLoadSecondImage,
+  onErrorFirstImage,
+  onErrorSecondImage,
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -130,11 +138,18 @@ export default function ImageSlider({
               src={image1}
               width={containerSize.width}
               height={containerSize.height}
+              onLoad={(): void => {
+                onLoadFirstImage && onLoadFirstImage();
+              }}
+              onError={(): void => {
+                onErrorFirstImage && onErrorFirstImage();
+              }}
             />
             {rightLabelText && (
               <div className="label__text label__right">{rightLabelText}</div>
             )}
           </div>
+
           <div
             className="slider__container img-comp-overlay"
             style={{ width: fromLeft <= 0 ? 0 : fromLeft }}
@@ -144,6 +159,12 @@ export default function ImageSlider({
               src={image2}
               width={containerSize.width}
               height={containerSize.height}
+              onLoad={(): void => {
+                onLoadSecondImage && onLoadSecondImage();
+              }}
+              onError={(): void => {
+                onErrorSecondImage && onErrorSecondImage();
+              }}
             />
             {leftLabelText && (
               <div className="label__text label__left">{leftLabelText}</div>

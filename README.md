@@ -53,3 +53,7 @@ import ImageSlider from "react-image-comparison-slider";
 | leftLabelText         |   string    |  null   | A label for the first image.                                      |
 | rightLabelText        |   string    |  null   | A label for the second image.                                     |
 | onSlide               |  function   |    -    | A callback function which is invoked on slider's position change. |
+| onLoadFirstImage      |  function   |    -    | Is invoked when the first image has finished loading.             |
+| onLoadSecondImage     |  function   |    -    | Is invoked when the second image has finished loading.            |
+| onErrorFirstImage     |  function   |    -    | Is invoked when an error occurs loading the first image           |
+| onErrorSecondImage    |  function   |    -    | Is invoked when an error occurs loading the second image          |

@@ -57,3 +57,5 @@ import ImageSlider from "react-image-comparison-slider";
 | onLoadSecondImage     |  function   |    -    | Is invoked when the second image has finished loading.            |
 | onErrorFirstImage     |  function   |    -    | Is invoked when an error occurs loading the first image           |
 | onErrorSecondImage    |  function   |    -    | Is invoked when an error occurs loading the second image          |
+| showPlaceholder       |   boolean   |  true   | Set placeholder's visibility.                                     |
+| customPlaceholder     | DOM Element |  null   | Pass your custom placeholder component/element.                   |

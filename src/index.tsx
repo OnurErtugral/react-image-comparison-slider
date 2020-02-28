@@ -25,6 +25,8 @@ interface IProps {
   onLoadSecondImage?: () => void;
   onErrorFirstImage?: () => void;
   onErrorSecondImage?: () => void;
+  showPlaceholder?: boolean;
+  customPlaceholder?: JSX.Element | null;
 }
 
 export default function ImageSlider({
@@ -46,6 +48,8 @@ export default function ImageSlider({
   onLoadSecondImage,
   onErrorFirstImage,
   onErrorSecondImage,
+  showPlaceholder = true,
+  customPlaceholder = null,
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -54,6 +58,12 @@ export default function ImageSlider({
     width: number;
     height: number;
   }>({ width: 0, height: 0 });
+  const [firstImageLoaded, setFirstImageLoaded] = React.useState<boolean>(
+    false,
+  );
+  const [secondImageLoaded, setSecondImageLoaded] = React.useState<boolean>(
+    false,
+  );
 
   React.useEffect(() => {
     if (containerRef && containerRef.current) {
@@ -128,9 +138,7 @@ export default function ImageSlider({
         cursor: isMouseDown ? "ew-resize" : "default",
       }}
     >
-      {fromLeft === null ? (
-        "Loading"
-      ) : (
+      {fromLeft !== null && (
         <>
           <div className="slider__container">
             <img
@@ -140,11 +148,26 @@ export default function ImageSlider({
               height={containerSize.height}
               onLoad={(): void => {
                 onLoadFirstImage && onLoadFirstImage();
+                setFirstImageLoaded(true);
               }}
               onError={(): void => {
                 onErrorFirstImage && onErrorFirstImage();
               }}
             />
+
+            {showPlaceholder &&
+              !firstImageLoaded &&
+              (customPlaceholder ? (
+                <div
+                  className="custom-placeholder__wrapper"
+                  style={{ left: fromLeft }}
+                >
+                  {customPlaceholder}
+                </div>
+              ) : (
+                <div className="placeholder" />
+              ))}
+
             {rightLabelText && (
               <div className="label__text label__right">{rightLabelText}</div>
             )}
@@ -161,11 +184,23 @@ export default function ImageSlider({
               height={containerSize.height}
               onLoad={(): void => {
                 onLoadSecondImage && onLoadSecondImage();
+                setSecondImageLoaded(true);
               }}
               onError={(): void => {
                 onErrorSecondImage && onErrorSecondImage();
               }}
             />
+
+            {showPlaceholder &&
+              !secondImageLoaded &&
+              (customPlaceholder ? (
+                <div className="custom-placeholder__wrapper">
+                  {customPlaceholder}
+                </div>
+              ) : (
+                <div className="placeholder" />
+              ))}
+
             {leftLabelText && (
               <div className="label__text label__left">{leftLabelText}</div>
             )}

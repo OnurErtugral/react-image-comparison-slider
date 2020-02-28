@@ -1,6 +1,6 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 
 import ImageSlider from "./index.tsx";
@@ -20,12 +20,6 @@ afterEach(() => {
   unmountComponentAtNode(container);
   container.remove();
   container = null;
-});
-
-it("prints Loading", () => {
-  const wrapper = shallow(<ImageSlider />);
-
-  expect(wrapper.text()).toContain("Loading");
 });
 
 it("prints first image's default alt text", () => {
@@ -246,4 +240,63 @@ it("invokes onError callbacks", () => {
     .find("img")
     .simulate("error");
   expect(onErrorSecondImage).toBeCalledTimes(1);
+});
+
+it("does not show placeholders, if showPlaceholder prop is false", () => {
+  const wrapper = mount(<ImageSlider showPlaceholder={false} />);
+
+  expect(
+    wrapper.find(".slider__container").children(".placeholder"),
+  ).toHaveLength(0);
+
+  expect(
+    wrapper.find(".slider__container").children(".custom-placeholder__wrapper"),
+  ).toHaveLength(0);
+});
+
+it("renders custom placeholders, if customPlaceholder prop exists", () => {
+  const customPlaceholder = <div className="my-placeholder" />;
+  const wrapper = mount(<ImageSlider customPlaceholder={customPlaceholder} />);
+
+  // does not render default placeholders
+  expect(
+    wrapper.find(".slider__container").children(".placeholder"),
+  ).toHaveLength(0);
+
+  // does show custom placeholder
+  expect(
+    wrapper
+      .find(".slider__container")
+      .children(".custom-placeholder__wrapper")
+      .children(".my-placeholder"),
+  ).toHaveLength(2);
+});
+
+it("does not renders placeholders, if images have been loaded", () => {
+  const customPlaceholder = <div className="my-placeholder" />;
+  const wrapper = mount(<ImageSlider customPlaceholder={customPlaceholder} />);
+
+  wrapper
+    .find(".slider__container")
+    .at(0)
+    .find("img")
+    .simulate("load");
+  wrapper
+    .find(".slider__container")
+    .at(1)
+    .find("img")
+    .simulate("load");
+
+  // does not render default placeholders
+  expect(
+    wrapper.find(".slider__container").children(".placeholder"),
+  ).toHaveLength(0);
+
+  // does not render custom placeholders
+  expect(
+    wrapper
+      .find(".slider__container")
+      .children(".custom-placeholder__wrapper")
+      .children(".my-placeholder"),
+  ).toHaveLength(0);
 });

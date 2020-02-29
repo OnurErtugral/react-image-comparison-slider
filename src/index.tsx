@@ -27,7 +27,11 @@ interface IProps {
   onErrorSecondImage?: () => void;
   showPlaceholder?: boolean;
   customPlaceholder?: JSX.Element | null;
+  animate?: boolean;
+  animationCycleDuration?: number;
 }
+
+let animationLoop: number;
 
 export default function ImageSlider({
   image1,
@@ -50,6 +54,8 @@ export default function ImageSlider({
   onErrorSecondImage,
   showPlaceholder = true,
   customPlaceholder = null,
+  animate = false,
+  animationCycleDuration = 5000,
 }: IProps): JSX.Element {
   const [fromLeft, setFromLeft] = React.useState<number | null>(null);
   const [isMouseDown, setIsMouseDown] = React.useState<boolean>(false);
@@ -64,8 +70,28 @@ export default function ImageSlider({
   const [secondImageLoaded, setSecondImageLoaded] = React.useState<boolean>(
     false,
   );
+  const fromLeftRef = React.useRef<number | null>(null);
 
   React.useEffect(() => {
+    let step = 1;
+    let widthClosure = 0;
+
+    function animateSlider(): void {
+      animationLoop = requestAnimationFrame(animateSlider);
+
+      if (fromLeftRef.current !== null) {
+        if (fromLeftRef.current >= widthClosure) {
+          step *= -1;
+        } else if (fromLeftRef.current <= 0) {
+          step *= -1;
+        }
+
+        setFromLeft(fromLeftRef.current + step);
+
+        fromLeftRef.current += step;
+      }
+    }
+
     if (containerRef && containerRef.current) {
       const { width, height } = containerRef.current.getBoundingClientRect();
       setContainerSize({
@@ -73,8 +99,16 @@ export default function ImageSlider({
         height,
       });
       setFromLeft(width * sliderInitialPosition);
+
+      if (animate) {
+        fromLeftRef.current = width * sliderInitialPosition;
+        step = Math.round((width / animationCycleDuration) * 16.6 * 100) / 100;
+        widthClosure = width;
+
+        animateSlider();
+      }
     }
-  }, [sliderInitialPosition]);
+  }, [animate, animationCycleDuration, sliderInitialPosition]);
 
   React.useEffect(() => {
     function handleMouseUp(e: MouseEvent | TouchEvent): void {
@@ -127,6 +161,7 @@ export default function ImageSlider({
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ): void => {
     e.stopPropagation();
+    cancelAnimationFrame(animationLoop);
     setIsMouseDown(true);
   };
 

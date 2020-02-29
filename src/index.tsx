@@ -161,6 +161,8 @@ export default function ImageSlider({
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ): void => {
     e.stopPropagation();
+    e.preventDefault();
+
     cancelAnimationFrame(animationLoop);
     setIsMouseDown(true);
   };

@@ -300,3 +300,39 @@ it("does not renders placeholders, if images have been loaded", () => {
       .children(".my-placeholder"),
   ).toHaveLength(0);
 });
+
+it("animates slider, and stops animation onClick on slider", () => {
+  const width = 500;
+  const animationCycleDuration = 5000;
+  const sliderInitialPosition = 0.5;
+  const step = Math.round((width / animationCycleDuration) * 16.6 * 100) / 100;
+
+  jest.spyOn(window, "requestAnimationFrame").mockImplementation(cb => null);
+  jest
+    .spyOn(Element.prototype, "getBoundingClientRect")
+    .mockImplementation(() => {
+      return {
+        width: width,
+        height: 500,
+      };
+    });
+  const cancelAnimationSpy = jest.spyOn(window, "cancelAnimationFrame");
+
+  const wrapper = mount(
+    <ImageSlider
+      sliderInitialPosition={sliderInitialPosition}
+      animate={true}
+      animationCycleDuration={animationCycleDuration}
+    />,
+  );
+
+  expect(window.requestAnimationFrame).toBeCalledTimes(1);
+  expect(wrapper.find(".slider__stick").prop("style")).toHaveProperty(
+    "left",
+    width * sliderInitialPosition + step,
+  );
+
+  // cancels animation on click
+  wrapper.find(".slider__stick").simulate("mousedown");
+  expect(cancelAnimationSpy).toBeCalledTimes(1);
+});

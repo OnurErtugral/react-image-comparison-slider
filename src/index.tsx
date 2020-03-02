@@ -15,6 +15,7 @@ interface IProps {
   sliderWidth?: number;
   sliderInitialPosition?: number;
   onSlide?: () => void;
+  onSlideEnd?: () => void;
   handleBackgroundColor?: string;
   handleColor?: string;
   showHandle?: boolean;
@@ -42,6 +43,7 @@ export default function ImageSlider({
   sliderWidth = 3,
   sliderInitialPosition = 0.5,
   onSlide,
+  onSlideEnd,
   handleBackgroundColor = "white",
   handleColor = "red",
   showHandle = true,
@@ -113,6 +115,7 @@ export default function ImageSlider({
   React.useEffect(() => {
     function handleMouseUp(e: MouseEvent | TouchEvent): void {
       setIsMouseDown(false);
+      onSlideEnd && onSlideEnd();
     }
 
     function handleMouseMove(e: MouseEvent): void {
@@ -155,7 +158,7 @@ export default function ImageSlider({
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [isMouseDown, onSlide, sliderWidth]);
+  }, [isMouseDown, onSlide, onSlideEnd, sliderWidth]);
 
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,

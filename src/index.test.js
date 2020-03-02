@@ -336,3 +336,23 @@ it("animates slider, and stops animation onClick on slider", () => {
   wrapper.find(".slider__stick").simulate("mousedown");
   expect(cancelAnimationSpy).toBeCalledTimes(1);
 });
+
+it("trigers onSlideEnd callback, upon mouseUp", () => {
+  const map = {};
+  document.addEventListener = jest.fn((event, cb) => {
+    map[event] = cb;
+  });
+
+  const onSlideEnd = jest.fn();
+
+  const wrapper = mount(<ImageSlider onSlideEnd={onSlideEnd} />);
+
+  wrapper.find(".slider__stick").simulate("mousedown");
+
+  act(() => {
+    map.mousemove({ pageX: 100, pageY: 100 });
+    map.mouseup({ pageX: 100, pageY: 100 });
+  });
+
+  expect(onSlideEnd).toBeCalledTimes(1);
+});

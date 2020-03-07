@@ -1,14 +1,14 @@
 {
   "name": "react-image-comparison-slider",
-  "version": "1.8.1",
-  "description": "",
+  "version": "1.8.2",
+  "description": "A React component to compare images with a slider.",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --open --hot --mode development",
     "build": "tsc && webpack --mode production",
     "lint": "eslint ./src/*.tsx",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
+    "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|css|md)\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors"

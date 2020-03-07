@@ -7,11 +7,16 @@
     "module": "commonjs",
     "target": "es5",
     "moduleResolution": "node",
+
+    "strict": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "declaration": true
+
+    "typeRoots": ["./node_modules/@types"],
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "include": ["./src"],
   "exclude": ["node_modules"]

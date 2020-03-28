@@ -1,6 +1,6 @@
 {
   "name": "react-image-comparison-slider",
-  "version": "1.8.2",
+  "version": "1.8.4",
   "description": "A React component to compare images with a slider.",
   "main": "dist/index.js",
   "scripts": {

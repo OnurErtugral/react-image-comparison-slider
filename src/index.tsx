@@ -14,7 +14,7 @@ interface IProps {
   sliderColor?: string;
   sliderWidth?: number;
   sliderInitialPosition?: number;
-  onSlide?: () => void;
+  onSlide?: (args: { position: number }) => void;
   onSlideEnd?: () => void;
   handleBackgroundColor?: string;
   handleColor?: string;
@@ -121,14 +121,22 @@ export default function ImageSlider({
     function handleMouseMove(e: MouseEvent): void {
       if (containerRef && containerRef.current && isMouseDown) {
         const { left, width } = containerRef.current.getBoundingClientRect();
-        onSlide && onSlide();
 
         if (e.pageX - left < 0) {
           setFromLeft(0 - sliderWidth / 2);
+          onSlide && onSlide({ position: 0 });
         } else if (e.pageX > left + width) {
           setFromLeft(width - sliderWidth / 2);
+          onSlide && onSlide({ position: 1 });
         } else {
-          setFromLeft(e.pageX - left);
+          const relativeDistance = e.pageX - left;
+          setFromLeft(relativeDistance);
+          onSlide &&
+            onSlide({
+              position:
+                Math.round((relativeDistance / width + Number.EPSILON) * 100) /
+                100,
+            });
         }
       }
     }
@@ -139,10 +147,19 @@ export default function ImageSlider({
 
         if (e.touches[0].pageX - left < 0) {
           setFromLeft(0 - sliderWidth / 2);
+          onSlide && onSlide({ position: 0 });
         } else if (e.touches[0].pageX > left + width) {
           setFromLeft(width - sliderWidth / 2);
+          onSlide && onSlide({ position: 1 });
         } else {
-          setFromLeft(e.touches[0].pageX - left);
+          const relativeDistance = e.touches[0].pageX - left;
+          setFromLeft(relativeDistance);
+          onSlide &&
+            onSlide({
+              position:
+                Math.round((relativeDistance / width + Number.EPSILON) * 100) /
+                100,
+            });
         }
       }
     }
